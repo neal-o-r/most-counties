@@ -33,9 +33,9 @@ def make_circle(x, y):
     return Point(x, y).buffer(size * km1)
 
 
-def point_overlaps(x, y, counties):
+def point_overlaps(x, y, counties, eps=0.05):
     p = make_circle(x, y)
-    return [c.intersection(p).area > 0.05 for c in counties]
+    return [c.intersection(p).area > eps for c in counties]
 
 
 def make_grid(bounds):
@@ -72,7 +72,6 @@ if __name__ == "__main__":
     counties = list(shps.geometries())
 
     latitudes, longitudes = make_grid(bounds)
-
     n_overlaps = np.zeros((len(latitudes), len(longitudes)))
     for i, lat in enumerate(latitudes):
         print(i)
